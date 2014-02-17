@@ -16,8 +16,8 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('login', 'AuthController@getLogin');
+Route::get('login', array('uses' => 'AuthController@getLogin'));
 
-Route::get('logout', 'AuthController@getLogout');
+Route::get('logout', array('uses' => 'AuthController@getLogout'));
 
 Route::controller('auth', 'AuthController');

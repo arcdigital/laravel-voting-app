@@ -24,17 +24,16 @@
 <h1>Hello, world!</h1>
 
 @if (Auth::check())
-Hello, {{Auth::user()->name}}.
+    Hello, {{Auth::user()->name}}.
+    @if (Auth::user()->is_admin)
+    You are an admin.
+    @else
+    You are a user.
+    @endif
 @else
-<a href="/login" class="btn btn-block btn-social btn-github">
-    <i class="fa fa-github"></i> Sign in with GitHub
-</a>
-@endif
-
-@if (Auth::user()->is_admin)
-You are an admin.
-@else
-You are a user.
+    <a href="/login" class="btn btn-block btn-social btn-github">
+        <i class="fa fa-github"></i> Sign in with GitHub
+    </a>
 @endif
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
