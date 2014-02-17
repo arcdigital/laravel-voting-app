@@ -1,7 +1,9 @@
 /bootstrap/compiled.php
+/app/config/local
 /vendor
 composer.phar
 composer.lock
+Envoy.blade.php
 .env.local.php
 .env.php
 .DS_Store
