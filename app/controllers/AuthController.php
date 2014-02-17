@@ -38,8 +38,21 @@ class AuthController extends BaseController {
                     //Check if admin
                     $githubOrgOwner = Httpful::get("https://api.github.com/teams/87121/members/{$githubProfile->body->login}?access_token=".Config::get('github.org_token'))->send();
                     $isAdmin = ($githubOrgOwner->code == 204 ? true : false);
+
+                    //Get real email address
+                    $githubEmails = Httpful::get("https://api.github.com/user/emails?access_token={$token}")->addHeader('Accept', 'application/vnd.github.v3')->send();
+                    foreach ($githubEmails->body as $email)
+                    {
+                        if ($email->primary)
+                        {
+                            $primaryEmail = $email->email;
+                            break;
+                        }
+                    }
+
                     if ($user = User::where('github_id', '=', $githubProfile->body->id)->first())
                     {
+                        $user->email = $primaryEmail;
                         $user->github_username = $githubProfile->body->login;
                         $user->github_token = $token;
                         $user->is_admin = $isAdmin;
@@ -49,7 +62,7 @@ class AuthController extends BaseController {
                     {
                         $user = User::create(array(
                             'name' => $githubProfile->body->name,
-                            'email' => $githubProfile->body->email,
+                            'email' => $primaryEmail,
                             'password' => str_random(16),
                             'github_id' => $githubProfile->body->id,
                             'github_username' => $githubProfile->body->login,
