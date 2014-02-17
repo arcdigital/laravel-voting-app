@@ -32,7 +32,6 @@ route::get('polls/{poll}', array('before' => 'auth', function(Poll $poll)
 
     $poll->is_votable = ($poll->ends_at > Carbon::now() ? true : false);
     $poll->voted_for = Vote::where('poll_id', '=', $poll->id)->where('user_id', '=', Auth::user()->id)->first();
-    //dd($poll->voted_for);
     return View::make('poll')->withPoll($poll);
 }));
 
@@ -65,9 +64,3 @@ route::get('polls/{poll}/vote/{choice}', array('before' => 'auth', function(Poll
     Session::flash('alert', array('danger', 'Invalid vote.'));
     return Redirect::to("/polls/{$poll->id}");
 }));
-
-Route::get('/test', function()
-{
-    $poll = Poll::find(2);
-    dd($poll->choices);
-});
