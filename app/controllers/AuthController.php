@@ -32,10 +32,14 @@ class AuthController extends BaseController {
                 $githubOrg = Httpful::get("https://api.github.com/orgs/cwdg/members/{$githubProfile->body->login}?access_token=".Config::get('github.org_token'))->send();
                 if ($githubOrg->code == 204)
                 {
+                    //Check if admin
+                    $githubOrgOwner = Httpful::get("https://api.github.com/teams/87121/members/{$githubProfile->body->login}?access_token=".Config::get('github.org_token'))->send();
+                    $isAdmin = ($githubOrgOwner->code == 204 ? true : false);
                     if ($user = User::where('github_id', '=', $githubProfile->body->id)->first())
                     {
                         $user->github_username = $githubProfile->body->login;
                         $user->github_token = $token;
+                        $user->is_admin = $isAdmin;
                         $user->save();
                     }
                     else
@@ -46,7 +50,8 @@ class AuthController extends BaseController {
                             'password' => str_random(16),
                             'github_id' => $githubProfile->body->id,
                             'github_username' => $githubProfile->body->login,
-                            'github_token' => $token
+                            'github_token' => $token,
+                            'is_admin' => $isAdmin,
                         ));
                     }
                     Auth::login($user);

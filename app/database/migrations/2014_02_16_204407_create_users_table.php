@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
             $table->integer('github_id');
             $table->string('github_username');
             $table->string('github_token');
+            $table->boolean('is_admin');
             $table->timestamps();
         });
     }
