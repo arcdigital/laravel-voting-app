@@ -4,6 +4,9 @@ class AuthController extends BaseController {
 
     public function getLogin()
     {
+        if (Auth::check())
+            return Redirect::to('/');
+
         Session::put('auth_state', str_random());
         return Redirect::to('https://github.com/login/oauth/authorize?client_id='.Config::get('github.client_id').'&scope='.Config::get('github.scope').'&state='.Session::get('auth_state'));
     }
