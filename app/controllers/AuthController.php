@@ -14,6 +14,7 @@ class AuthController extends BaseController {
     public function getLogout()
     {
         Auth::logout();
+        Session::flash('alert', array('success', 'You were logged out successfully'));
         return Redirect::to('/');
     }
 
@@ -71,13 +72,17 @@ class AuthController extends BaseController {
                         ));
                     }
                     Auth::login($user);
+                    Session::flash('alert', array('success', 'You were logged in successfully via GitHub.'));
                     return Redirect::to('/');
                 }
-                return 'Not a member of org';
+                Session::flash('alert', array('warning', 'You are not a member of the CWDG GitHub Org.'));
+                return Redirect::to('/');
             }
-            return 'invalid state';
+            Session::flash('alert', array('danger', 'Invalid OAuth State. Please try logging in again.'));
+            return Redirect::to('/');
         }
-        return 'invalid request';
+        Session::flash('alert', array('danger', 'Invalid Request. Please try logging in again.'));
+        return Redirect::to('/');
     }
 
 }
