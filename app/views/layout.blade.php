@@ -25,9 +25,16 @@
 <body>
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
-            <ul class="nav navbar-nav">
-                <a class="navbar-brand" href="/">CWDG Voting</a>
-            </ul>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">CWDG Voting</a>
+        </div>
+        <div class="navbar-collapse collapse">
             @if (Auth::check())
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -43,8 +50,10 @@
                 </li>
             </ul>
             @endif
+        </div><!--/.nav-collapse -->
     </div>
 </div>
+
 
 <div class="container">
     @if ($alert = Session::get('alert', false))
