@@ -15,9 +15,9 @@
     <div class="list-group">
         @foreach ($poll->choices as $choice)
             @if ($choice->id == $poll->voted_for->choice_id)
-                <a href="#" class="list-group-item">{{$choice->description}} <span class="label label-default">Your Vote</span><span class="glyphicon glyphicon-ok-circle pull-right"></span></a>
+                <a class="list-group-item">{{$choice->description}} <span class="label label-default">Your Vote</span><span class="glyphicon glyphicon-ok-circle pull-right"></span></a>
             @else
-                <a href="#" class="list-group-item">{{$choice->description}}<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item">{{$choice->description}}</a>
             @endif
         @endforeach
     </div>
