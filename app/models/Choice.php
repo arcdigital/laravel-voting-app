@@ -13,4 +13,10 @@ class Choice extends Eloquent {
     {
         return $this->hasMany('Vote');
     }
+
+    public function getTotalVotesAttribute()
+    {
+        return $this->votes()->count();
+    }
+
 }

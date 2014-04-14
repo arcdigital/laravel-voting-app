@@ -35,9 +35,14 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+    if (Auth::guest()) return Redirect::guest('login');
 });
 
+Route::filter('auth.admin', function()
+{
+    if (Auth::guest()) return Redirect::guest('login');
+    if (!Auth::user()->is_admin) return Redirect::to('/');
+});
 
 Route::filter('auth.basic', function()
 {
