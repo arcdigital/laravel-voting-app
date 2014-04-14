@@ -67,5 +67,5 @@ route::get('polls/{poll}/vote/{choice}', array('before' => 'auth', function(Poll
 
 Route::get('polls/{poll}/results', array('before' => 'auth.admin', function(Poll $poll)
 {
-    return View::make('poll')->withPoll($poll);
+    return View::make('pollResults')->withPoll($poll);
 }));
