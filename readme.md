@@ -1,2 +1,3 @@
 ## Laravel Voting App
-More info coming soon.
+
+This app lets you vote, hence the name, it's very good at that too.
